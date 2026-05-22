@@ -31,4 +31,8 @@ jobs:
           version: '~> v2'
           args: release --clean
         env:
+          # Default token: in-repo release assets + ghcr push.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # PAT with write access to rad-security/homebrew, used only to
+          # publish the Homebrew formula to the shared tap.
+          HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}

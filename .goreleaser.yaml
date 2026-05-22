@@ -41,6 +41,18 @@ checksum:
 snapshot:
   version_template: "{{ incpatch .Version }}-snapshot"
 
+brews:
+  - name: rad-image-scanner
+    repository:
+      owner: rad-security
+      name: homebrew
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    homepage: "https://github.com/rad-security/image-scanner"
+    description: "Container image vulnerability scanner — wraps Grype with RAD Security enrichment"
+    license: "Apache-2.0"
+    test: |
+      system "#{bin}/rad-image-scanner", "--version"
+
 changelog:
   sort: asc
   filters:

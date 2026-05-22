@@ -2,6 +2,30 @@
 
 A container image vulnerability scanner, when [RAD Security](https://rad.security) credentials are configured, enriches the report with information about the image as it is *currently deployed* in your fleet — vulnerability count deltas, regression detection, and distro EOL warnings.
 
+## Installation
+
+### Homebrew
+
+```sh
+brew install rad-security/homebrew/rad-image-scanner
+```
+
+### Binary releases
+
+Download the archive for your platform from the [releases page](https://github.com/rad-security/image-scanner/releases) and place `rad-image-scanner` on your `PATH`.
+
+### Docker
+
+```sh
+docker run --rm ghcr.io/rad-security/image-scanner:latest <image>
+```
+
+### From source
+
+```sh
+go install github.com/rad-security/image-scanner@latest
+```
+
 ## Modes
 
 ### Pure passthrough — no RAD env
