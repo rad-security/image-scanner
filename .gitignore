@@ -1,0 +1,6 @@
+/bin/
+/dist/
+rad-report*.json
+sarif_output.json
+.claude/settings.local.json
+init_prompt.md
