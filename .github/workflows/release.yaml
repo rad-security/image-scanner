@@ -28,7 +28,8 @@ jobs:
       - uses: goreleaser/goreleaser-action@v6
         with:
           distribution: goreleaser
-          version: '~> v2'
+          # Pinned to keep the release in lockstep with the validated config.
+          version: 'v2.4.4'
           args: release --clean
         env:
           # Default token: in-repo release assets + ghcr push.
