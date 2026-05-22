@@ -1,0 +1,9 @@
+rad-image-scanner
+Copyright 2026 RAD Security, Inc.
+
+This product includes and/or downloads at runtime the Grype vulnerability
+scanner (https://github.com/anchore/grype), Copyright Anchore, Inc.,
+licensed under the Apache License, Version 2.0.
+
+The container image published for this project is built FROM the official
+anchore/grype image and therefore redistributes the Grype binary.

@@ -1,0 +1,92 @@
+version: 2
+
+project_name: rad-image-scanner
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: rad-image-scanner
+    main: ./
+    binary: rad-image-scanner
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    ldflags:
+      - -s -w
+      - -X github.com/rad-security/image-scanner/internal/cli.version={{.Version}}
+      - -X github.com/rad-security/image-scanner/internal/cli.commit={{.Commit}}
+
+archives:
+  - format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- .Version }}_
+      {{- .Os }}_
+      {{- .Arch }}
+    format_overrides:
+      - goos: windows
+        format: zip
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-snapshot"
+
+brews:
+  - name: rad-image-scanner
+    repository:
+      owner: rad-security
+      name: homebrew
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    homepage: "https://github.com/rad-security/image-scanner"
+    description: "Container image vulnerability scanner — wraps Grype with RAD Security enrichment"
+    license: "Apache-2.0"
+    test: |
+      system "#{bin}/rad-image-scanner", "--version"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+      - '^chore:'
+
+dockers:
+  - image_templates:
+      - "ghcr.io/rad-security/image-scanner:{{ .Version }}-amd64"
+    use: buildx
+    goos: linux
+    goarch: amd64
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - --platform=linux/amd64
+      - --label=org.opencontainers.image.source=https://github.com/rad-security/image-scanner
+  - image_templates:
+      - "ghcr.io/rad-security/image-scanner:{{ .Version }}-arm64"
+    use: buildx
+    goos: linux
+    goarch: arm64
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - --platform=linux/arm64
+      - --label=org.opencontainers.image.source=https://github.com/rad-security/image-scanner
+
+docker_manifests:
+  - name_template: "ghcr.io/rad-security/image-scanner:{{ .Version }}"
+    image_templates:
+      - "ghcr.io/rad-security/image-scanner:{{ .Version }}-amd64"
+      - "ghcr.io/rad-security/image-scanner:{{ .Version }}-arm64"
+  - name_template: "ghcr.io/rad-security/image-scanner:latest"
+    image_templates:
+      - "ghcr.io/rad-security/image-scanner:{{ .Version }}-amd64"
+      - "ghcr.io/rad-security/image-scanner:{{ .Version }}-arm64"
