@@ -1,6 +1,6 @@
 module github.com/rad-security/image-scanner
 
-go 1.23
+go 1.26
 
 require (
 	github.com/distribution/reference v0.6.0
