@@ -63,7 +63,7 @@ changelog:
 
 dockers:
   - image_templates:
-      - "ghcr.io/rad-security/image-scanner:{{ .Version }}-amd64"
+      - "public.ecr.aws/n8h5y2v5/rad-security/rad-image-scanner:{{ .Version }}-amd64"
     use: buildx
     goos: linux
     goarch: amd64
@@ -72,7 +72,7 @@ dockers:
       - --platform=linux/amd64
       - --label=org.opencontainers.image.source=https://github.com/rad-security/image-scanner
   - image_templates:
-      - "ghcr.io/rad-security/image-scanner:{{ .Version }}-arm64"
+      - "public.ecr.aws/n8h5y2v5/rad-security/rad-image-scanner:{{ .Version }}-arm64"
     use: buildx
     goos: linux
     goarch: arm64
@@ -82,11 +82,11 @@ dockers:
       - --label=org.opencontainers.image.source=https://github.com/rad-security/image-scanner
 
 docker_manifests:
-  - name_template: "ghcr.io/rad-security/image-scanner:{{ .Version }}"
+  - name_template: "public.ecr.aws/n8h5y2v5/rad-security/rad-image-scanner:{{ .Version }}"
     image_templates:
-      - "ghcr.io/rad-security/image-scanner:{{ .Version }}-amd64"
-      - "ghcr.io/rad-security/image-scanner:{{ .Version }}-arm64"
-  - name_template: "ghcr.io/rad-security/image-scanner:latest"
+      - "public.ecr.aws/n8h5y2v5/rad-security/rad-image-scanner:{{ .Version }}-amd64"
+      - "public.ecr.aws/n8h5y2v5/rad-security/rad-image-scanner:{{ .Version }}-arm64"
+  - name_template: "public.ecr.aws/n8h5y2v5/rad-security/rad-image-scanner:latest"
     image_templates:
-      - "ghcr.io/rad-security/image-scanner:{{ .Version }}-amd64"
-      - "ghcr.io/rad-security/image-scanner:{{ .Version }}-arm64"
+      - "public.ecr.aws/n8h5y2v5/rad-security/rad-image-scanner:{{ .Version }}-amd64"
+      - "public.ecr.aws/n8h5y2v5/rad-security/rad-image-scanner:{{ .Version }}-arm64"
