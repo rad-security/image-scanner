@@ -45,7 +45,7 @@ brews:
   - name: rad-image-scanner
     repository:
       owner: rad-security
-      name: homebrew
+      name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     homepage: "https://github.com/rad-security/image-scanner"
     description: "Container image vulnerability scanner — wraps Grype with RAD Security enrichment"

@@ -4,21 +4,35 @@ A container image vulnerability scanner, when [RAD Security](https://rad.securit
 
 ## Installation
 
-### Homebrew
+### Homebrew (macOS / Linuxbrew)
 
 ```sh
-brew install rad-security/homebrew/rad-image-scanner
+brew install rad-security/tap/rad-image-scanner
 ```
 
-### Binary releases
+### Linux (curl + tar)
 
-Download the archive for your platform from the [releases page](https://github.com/rad-security/image-scanner/releases) and place `rad-image-scanner` on your `PATH`.
+Download and install the latest binary into `/usr/local/bin`:
+
+```sh
+VERSION=$(curl -fsSL https://api.github.com/repos/rad-security/image-scanner/releases/latest | grep -oE '"tag_name": "v[^"]+"' | cut -d'"' -f4 | sed 's/^v//')
+ARCH=$(uname -m); case "$ARCH" in x86_64) ARCH=amd64;; aarch64|arm64) ARCH=arm64;; esac
+curl -fsSL "https://github.com/rad-security/image-scanner/releases/download/v${VERSION}/rad-image-scanner_${VERSION}_linux_${ARCH}.tar.gz" \
+  | sudo tar -xz -C /usr/local/bin rad-image-scanner
+rad-image-scanner --version
+```
+
+For macOS, swap `linux` for `darwin` in the URL.
 
 ### Docker
 
 ```sh
 docker run --rm ghcr.io/rad-security/image-scanner:latest <image>
 ```
+
+### Binary releases (manual)
+
+Download the archive for your platform from the [releases page](https://github.com/rad-security/image-scanner/releases) and place `rad-image-scanner` on your `PATH`.
 
 ### From source
 
