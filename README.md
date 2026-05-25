@@ -27,7 +27,7 @@ For macOS, swap `linux` for `darwin` in the URL.
 ### Docker
 
 ```sh
-docker run --rm ghcr.io/rad-security/image-scanner:latest <image>
+docker run --rm public.ecr.aws/n8h5y2v5/rad-security/rad-image-scanner:latest <image>
 ```
 
 ### Binary releases (manual)
