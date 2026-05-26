@@ -1,10 +1,14 @@
-# Final stage: ship our binary alongside grype.
-FROM anchore/grype:v0.112.0
+# Multistage so the published image is usable as a base for wrapper images
+# (e.g. rad-security/image-scan-action) that expect /etc/passwd, /bin/sh, and
+# chmod. anchore/grype is FROM scratch, so consuming it directly breaks every
+# `USER root` / `RUN chmod` / `#!/bin/sh` entrypoint downstream.
+FROM anchore/grype:v0.112.0 AS grype
 
-# anchore/grype is built FROM scratch — no shell, no package manager. The
-# entrypoint is the grype binary itself. We override that so our wrapper runs
-# instead, and tell our binary where to find grype via RAD_GRYPE_PATH.
+FROM alpine:3.23
 
+RUN apk add --no-cache ca-certificates
+
+COPY --from=grype /grype /grype
 COPY rad-image-scanner /usr/local/bin/rad-image-scanner
 
 ENV RAD_GRYPE_PATH=/grype
