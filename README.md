@@ -47,7 +47,7 @@ go install github.com/rad-security/image-scanner@latest
 If `RAD_ACCESS_KEY_ID` and `RAD_SECRET_KEY` are unset, `rad-image-scanner` behaves identically to `grype`. Every argument is forwarded, output is unchanged, and the exit code is grype's.
 
 ```sh
-rad-image-scanner alpine:3.23 -o sarif --file alpine.sarif
+rad-image-scanner alpine:3.23
 ```
 
 ### RAD-enriched
@@ -65,41 +65,53 @@ With the following environment variables, the scanner also queries the RAD Secur
 export RAD_ACCESS_KEY_ID=...
 export RAD_SECRET_KEY=...
 export RAD_ACCOUNT_IDS=acct_1,acct_2
-
-rad-image-scanner nginx:stable-alpine3.23 \
-    -o sarif --file svc.sarif \
-    --rad-annotate-sarif \
-    --rad-fail-on-regression=critical \
-    --rad-fail-on-eol
-
-
- ✔ Loaded image                                                           nginx:stable-alpine3.23
- ✔ Parsed image           sha256:ef5d6a03fb49fbc0f7ec6dc8e0f53ba5084b105aa327e061d6e17423c6ad3ffe
- ✔ Cataloged contents            b3ef1348ce35b68960bc265b9e355986dd62b7018ce80574ad0f65356e23f915
-   ├── ✔ Packages                        [71 packages]
-   ├── ✔ File metadata                   [979 locations]
-   ├── ✔ Executables                     [126 executables]
-   └── ✔ File digests                    [979 files]
- ✔ Scanned for vulnerabilities     [16 vulnerability matches]
-   ├── by severity: 0 critical, 4 high, 12 medium, 0 low, 0 negligible
-   └── by status:   0 fixed, 16 not-fixed, 0 ignored
-NAME           INSTALLED   TYPE  VULNERABILITY   SEVERITY  EPSS           RISK
-tiff           4.7.1-r0    apk   CVE-2023-6277   Medium    3.8% (88th)    2.2
-tiff           4.7.1-r0    apk   CVE-2023-52356  High      0.7% (72nd)    0.5
-curl           8.19.0-r0   apk   CVE-2026-7168   Medium    < 0.1% (23rd)  < 0.1
-busybox        1.37.0-r30  apk   CVE-2025-60876  Medium    < 0.1% (15th)  < 0.1
-busybox-binsh  1.37.0-r30  apk   CVE-2025-60876  Medium    < 0.1% (15th)  < 0.1
-ssl_client     1.37.0-r30  apk   CVE-2025-60876  Medium    < 0.1% (15th)  < 0.1
-tiff           4.7.1-r0    apk   CVE-2026-4775   High      < 0.1% (11th)  < 0.1
-curl           8.19.0-r0   apk   CVE-2026-5545   Medium    < 0.1% (15th)  < 0.1
-curl           8.19.0-r0   apk   CVE-2026-6253   Medium    < 0.1% (12th)  < 0.1
-curl           8.19.0-r0   apk   CVE-2026-5773   High      < 0.1% (7th)   < 0.1
-curl           8.19.0-r0   apk   CVE-2026-6429   Medium    < 0.1% (7th)   < 0.1
-curl           8.19.0-r0   apk   CVE-2026-6276   High      < 0.1% (5th)   < 0.1
-curl           8.19.0-r0   apk   CVE-2026-4873   Medium    < 0.1% (4th)   < 0.1
-freetype       2.14.1-r0   apk   CVE-2026-23865  Medium    < 0.1% (4th)   < 0.1
-tiff           4.7.1-r0    apk   CVE-2023-6228   Medium    < 0.1% (3rd)   < 0.1
-curl           8.19.0-r0   apk   CVE-2026-7009   Medium    < 0.1% (1st)   < 0.1
+rad-image-scanner public.ecr.aws/n8h5y2v5/rad-security/rad-sbom:v1.1.63
+ ✔ Loaded image                                                                            public.ecr.aws/n8h5y2v5/rad-security/rad-sbom:v1.1.63
+ ✔ Parsed image                                                          sha256:75ae68d3c6bed4e29c8f2cdc7d843495c48c39498bc0040b16d77acbf3063759
+ ✔ Cataloged contents                                                           c90f526ca7ee5cb902f18c2d752627863d9725f0c714c3ddf791e9489caabe3b
+   ├── ✔ Packages                        [367 packages]
+   ├── ✔ Executables                     [1 executables]
+   ├── ✔ File metadata                   [934 locations]
+   └── ✔ File digests                    [934 files]
+ ✔ Scanned for vulnerabilities     [35 vulnerability matches]
+   ├── by severity: 1 critical, 18 high, 14 medium, 2 low, 0 negligible
+   └── by status:   35 fixed, 0 not-fixed, 0 ignored
+NAME                                                   INSTALLED  FIXED IN         TYPE       VULNERABILITY        SEVERITY  EPSS           RISK
+stdlib                                                 go1.26.1   1.25.10, 1.26.3  go-module  CVE-2026-39820       High      < 0.1% (16th)  < 0.1
+github.com/go-git/go-git/v5                            v5.17.0    5.18.0           go-module  GHSA-3xc5-wrhm-f963  Medium    < 0.1% (17th)  < 0.1
+github.com/go-jose/go-jose/v4                          v4.1.3     4.1.4            go-module  GHSA-78h2-9frx-2jm8  High      < 0.1% (10th)  < 0.1
+stdlib                                                 go1.26.1   1.25.9, 1.26.2   go-module  CVE-2026-27143       Critical  < 0.1% (6th)   < 0.1
+stdlib                                                 go1.26.1   1.25.9, 1.26.2   go-module  CVE-2026-32281       High      < 0.1% (6th)   < 0.1
+stdlib                                                 go1.26.1   1.25.10, 1.26.3  go-module  CVE-2026-42499       High      < 0.1% (6th)   < 0.1
+stdlib                                                 go1.26.1   1.25.9, 1.26.2   go-module  CVE-2026-32280       High      < 0.1% (6th)   < 0.1
+stdlib                                                 go1.26.1   1.25.10, 1.26.3  go-module  CVE-2026-39836       High      < 0.1% (5th)   < 0.1
+stdlib                                                 go1.26.1   1.25.9, 1.26.2   go-module  CVE-2026-32283       High      < 0.1% (5th)   < 0.1
+stdlib                                                 go1.26.1   1.25.10, 1.26.3  go-module  CVE-2026-33814       High      < 0.1% (5th)   < 0.1
+stdlib                                                 go1.26.1   1.25.10, 1.26.3  go-module  CVE-2026-33811       High      < 0.1% (4th)   < 0.1
+stdlib                                                 go1.26.1   1.25.9, 1.26.2   go-module  CVE-2026-27140       High      < 0.1% (3rd)   < 0.1
+github.com/hashicorp/go-getter                         v1.8.5     1.8.6            go-module  GHSA-92mm-2pjq-r785  High      < 0.1% (3rd)   < 0.1
+stdlib                                                 go1.26.1   1.26.2           go-module  CVE-2026-33810       High      < 0.1% (2nd)   < 0.1
+go.opentelemetry.io/otel/sdk                           v1.41.0    1.43.0           go-module  GHSA-hfvc-g4fc-pqhx  High      < 0.1% (1st)   < 0.1
+stdlib                                                 go1.26.1   1.25.10, 1.26.3  go-module  CVE-2026-39826       Medium    < 0.1% (2nd)   < 0.1
+stdlib                                                 go1.26.1   1.25.10, 1.26.3  go-module  CVE-2026-39825       Medium    < 0.1% (1st)   < 0.1
+stdlib                                                 go1.26.1   1.25.9, 1.26.2   go-module  CVE-2026-32289       Medium    < 0.1% (1st)   < 0.1
+stdlib                                                 go1.26.1   1.25.10, 1.26.3  go-module  CVE-2026-42501       High      < 0.1% (0th)   < 0.1
+stdlib                                                 go1.26.1   1.25.9, 1.26.2   go-module  CVE-2026-32282       Medium    < 0.1% (1st)   < 0.1
+stdlib                                                 go1.26.1   1.25.10, 1.26.3  go-module  CVE-2026-39823       Medium    < 0.1% (1st)   < 0.1
+stdlib                                                 go1.26.1   1.25.10, 1.26.3  go-module  CVE-2026-39819       Medium    < 0.1% (0th)   < 0.1
+stdlib                                                 go1.26.1   1.25.9, 1.26.2   go-module  CVE-2026-27144       High      < 0.1% (0th)   < 0.1
+github.com/go-git/go-git/v5                            v5.17.0    5.17.1           go-module  GHSA-jhf3-xxhw-2wpp  Medium    < 0.1% (0th)   < 0.1
+stdlib                                                 go1.26.1   1.25.10, 1.26.3  go-module  CVE-2026-39817       Medium    < 0.1% (0th)   < 0.1
+stdlib                                                 go1.26.1   1.25.9, 1.26.2   go-module  CVE-2026-32288       Medium    < 0.1% (0th)   < 0.1
+github.com/go-git/go-git/v5                            v5.17.0    5.17.1           go-module  GHSA-gm2x-2g9h-ccm8  Low       < 0.1% (0th)   < 0.1
+github.com/containerd/containerd/v2                    v2.2.1     2.2.4            go-module  GHSA-fqw6-gf59-qr4w  High      N/A            N/A
+github.com/go-git/go-billy/v5                          v5.8.0     5.9.0            go-module  GHSA-qw64-3x98-g7q2  High      N/A            N/A
+github.com/go-git/go-git/v5                            v5.17.0    5.19.0           go-module  GHSA-389r-gv7p-r3rp  High      N/A            N/A
+github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream  v1.7.4     1.7.8            go-module  GHSA-xmrv-pmrh-hhx2  Medium    N/A            N/A
+github.com/aws/aws-sdk-go-v2/service/s3                v1.96.0    1.97.3           go-module  GHSA-xmrv-pmrh-hhx2  Medium    N/A            N/A
+github.com/go-git/go-billy/v5                          v5.8.0     5.9.0            go-module  GHSA-m3xc-h892-ggx6  Medium    N/A            N/A
+github.com/go-git/go-git/v5                            v5.17.0    5.19.1           go-module  GHSA-crhj-59gh-8x96  Medium    N/A            N/A
+github.com/go-git/go-git/v5                            v5.17.0    5.19.1           go-module  GHSA-m7cr-m3pv-hgrp  Low       N/A            N/A
 
   ██████╗  █████╗ ██████╗
   ██╔══██╗██╔══██╗██╔══██╗
@@ -111,32 +123,70 @@ curl           8.19.0-r0   apk   CVE-2026-7009   Medium    < 0.1% (1st)   < 0.1
    SECURITY · IMAGE SCANNER ENRICHMENT REPORT
 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-  Image: nginx:stable-alpine3.23
-  Scan:  0 critical  4 high  12 medium  0 low  0 negligible  0 unknown   (16 total)
+  Image: public.ecr.aws/n8h5y2v5/rad-security/rad-sbom:v1.1.63
+  Scan:  1 critical  18 high  14 medium  2 low  0 negligible  0 unknown   (35 total)
 
   Deployed instances (2 across 1 account(s))
 
   ACCOUNT                     DIGEST        DISTRO          EOL       CRITICAL   HIGH       MEDIUM     LOW        VERDICT
-  2IAtTppYqpVGxSdkBWW5n7zYzVU 1eadbb078203  alpine:3.20.6   reached   5 (-5)     51 (-47)   60 (-48)   10 (-10)   improvement
-  2IAtTppYqpVGxSdkBWW5n7zYzVU 33001975a6ea  alpine:3.19.3   reached   6 (-6)     51 (-47)   60 (-48)   16 (-16)   improvement
+  2IAtTppYqpVGxSdkBWW5n7zYzVU d02822aa8630  debian:12       30-days   6 (-5)     33 (-15)   41 (-27)   7 (-5)     improvement
+  2IAtTppYqpVGxSdkBWW5n7zYzVU 3c5b34816636  debian:13       ok        0 (+1)     9 (+9)     7 (+7)     1 (+1)     regression
 
   Placement — where this image runs
 
-    1eadbb078203  1 container(s) · 1 cluster(s) · 1 namespace(s)
-      clusters:   pe-prd-us-west-2
+    d02822aa8630  1 container(s) · 1 cluster(s) · 1 namespace(s)
+      clusters:   gke-cluster-standard
       namespaces: default
-      workloads:  Pod/nginx-7
+      workloads:  Pod/rad-sbom-7b75597cd7-s7kjm
 
-    33001975a6ea  1 container(s) · 1 cluster(s) · 1 namespace(s)
+    3c5b34816636  1 container(s) · 1 cluster(s) · 1 namespace(s)
       clusters:   pe-prd-us-west-2
-      namespaces: default
-      workloads:  Pod/nginx-6
+      namespaces: rad
+      workloads:  Pod/rad-sbom-59d64c769c-jgkkt
 
-  Overall verdict: improvement
-  Report:          rad-report-nginx-20260522-135531.json
+  Overall verdict: regression
+  Report:          rad-report-rad-sbom-20260526-121159.json
 
-  ✓  BETTER — this image has fewer vulnerabilities than every deployed instance. Safe to roll out.
+  ✗  WORSE — this image adds vulnerabilities versus what is currently deployed. Review before rolling out.
 ```
+
+## Use in CI (GitHub Action)
+
+[`rad-security/image-scan-action`](https://github.com/rad-security/image-scan-action) is the same scanner wrapped as a GitHub Action. It scans an image (or a pre-built Syft SBOM), optionally enriches the report with currently-deployed inventory from RAD Security, and can fail the workflow on severity, regression vs deployed instances, or an end-of-life base distro.
+
+Minimal — plain Grype scan, no RAD env:
+
+```yaml
+- uses: rad-security/image-scan-action@v1
+  with:
+    image: ghcr.io/${{ github.repository }}:${{ github.sha }}
+    fail_on_severity: high
+```
+
+RAD-enriched — gate the PR on regression vs deployed images and upload SARIF to Code Scanning:
+
+```yaml
+- id: scan
+  uses: rad-security/image-scan-action@v1
+  with:
+    image: ghcr.io/${{ github.repository }}:${{ github.sha }}
+    format: sarif
+    rad_account_ids: acct_1,acct_2
+    rad_fail_on_regression: critical
+    rad_fail_on_eol: "true"
+  env:
+    RAD_ACCESS_KEY_ID: ${{ secrets.RAD_ACCESS_KEY_ID }}
+    RAD_SECRET_KEY: ${{ secrets.RAD_SECRET_KEY }}
+
+- uses: github/codeql-action/upload-sarif@v3
+  if: always()
+  with:
+    sarif_file: ${{ steps.scan.outputs.sarif }}
+```
+
+`RAD_ACCESS_KEY_ID` and `RAD_SECRET_KEY` go in `env:`, not `inputs:` — Actions inputs are visible in workflow logs; secrets in `env:` are masked.
+
+Full input/output reference: [`rad-security/image-scan-action` README](https://github.com/rad-security/image-scan-action#readme).
 
 ## RAD-specific flags
 
